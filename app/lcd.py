@@ -1,13 +1,19 @@
 import pdb
 
 class LCD(object):
+	"""A representation of LCD screen.
 
-	def __init__(self, betweenDigits, inputLines):
-		self.betweenDigits = betweenDigits
-		self.inputLines    = inputLines
+    :param betweenDigits: An int, the spaces between digits.
+    :param inputLines: A vector of int values with length 2, representing the
+                       size and number to be painted.
+    """
 
-	def paintDigits(self):
-		print "Name : ", self.betweenDigits, ", InputLines", self.inputLines
+    def __init__(self, betweenDigits, inputLines):
+        self.betweenDigits = betweenDigits
+        self.inputLines    = inputLines
+
+    def paint_digits(self):
+        print "Name : ", self.betweenDigits, ", InputLines", self.inputLines
 
 
        

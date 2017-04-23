@@ -4,41 +4,40 @@ from app.processor import Processor
  
 class Test(unittest.TestCase):
 
-	def setUp(self):
-		self.processor = Processor()
+    def setUp(self):
+        self.processor = Processor()
 
-	def test_betweenDigitsValues(self):
-	    result = self.processor.betweenDigits(2)
-	    self.assertEqual(2, result)
+    def test_space_between_digits_values(self):
+        result = self.processor.between_digits(2)
+        self.assertEqual(2, result)
 
-	def test_inputLinesCase1(self):
-		self.assertRaises(ValueError, self.processor.betweenDigits, 9)
+    def test_space_between_digits_values_major_value_case(self):
+        self.assertRaises(ValueError, self.processor.between_digits, 9)
 
-	def test_inputLinesCase1(self):
-		self.assertRaises(ValueError, self.processor.betweenDigits, -4)
+    def test_space_between_digits_values_negative_value_case(self):
+        self.assertRaises(ValueError, self.processor.between_digits, -4)
 
-	def test_inputLinesCase2(self):
-		self.assertRaises(ValueError, self.processor.betweenDigits, 'cadena')
+    def test_space_between_digits_values_string_value_case(self):
+        self.assertRaises(ValueError, self.processor.between_digits, 'five')
 
+    def test_input_lines(self):
+        result = self.processor.input_lines('2,2')
+        self.assertEqual([2,2], result)
 
-	def test_inputLines(self):
-	    result = self.processor.inputLines('2,2')
-	    self.assertEqual([2,2], result)
+    def test_input_lines_string_coma_case(self):
+        self.assertRaises(ValueError, self.processor.input_lines, 'two,')
 
-	def test_inputLinesCase1(self):
-		self.assertRaises(ValueError, self.processor.inputLines, 'two,')
+    def test_input_lines_coma_string_case(self):
+        self.assertRaises(ValueError, self.processor.input_lines, ',two')
 
-	def test_inputLinesCase2(self):
-		self.assertRaises(ValueError, self.processor.inputLines, ',two')
+    def test_input_lines_string_coma_string_case(self):
+        self.assertRaises(ValueError, self.processor.input_lines, 'two,one')
 
-	def test_inputLinesCase3(self):
-		self.assertRaises(ValueError, self.processor.inputLines, 'two,one')
+    def test_input_lines_int_coma_string_case(self):
+        self.assertRaises(ValueError, self.processor.input_lines, '1,two')
 
-	def test_inputLinesCase4(self):
-		self.assertRaises(ValueError, self.processor.inputLines, '1,two')
+    def test_input_lines_string_coma_int_case(self):
+        self.assertRaises(ValueError, self.processor.input_lines, 'two,2')
 
-	def test_inputLinesCase5(self):
-		self.assertRaises(ValueError, self.processor.inputLines, 'two,2')
-
-	if __name__ == '__main__':
-		unittest.main()
+    if __name__ == '__main__':
+        unittest.main()
