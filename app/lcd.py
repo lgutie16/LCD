@@ -8,12 +8,14 @@ class LCD(object):
                        size and number to be painted.
     """
 
-    def __init__(self, betweenDigits, inputLines):
-        self.betweenDigits = betweenDigits
-        self.inputLines    = inputLines
+	def __init__(self, betweenDigits, inputLines):
+		self.betweenDigits = betweenDigits
+		self.inputLines    = inputLines
 
-    def paint_digits(self):
-        print "Name : ", self.betweenDigits, ", InputLines", self.inputLines
+	def paint_digits(self):
+		for x in xrange(1,len(self.inputLines)):
+		    self.inputLines[x]
+		
 
 
        

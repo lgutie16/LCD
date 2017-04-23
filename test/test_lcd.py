@@ -39,5 +39,11 @@ class Test(unittest.TestCase):
     def test_input_lines_string_coma_int_case(self):
         self.assertRaises(ValueError, self.processor.input_lines, 'two,2')
 
+    def test_input_lines_no_in_range_value_major_case(self):
+        self.assertRaises(ValueError, self.processor.input_lines, '11,2')
+
+    def test_input_lines_no_in_range_value_minor_case(self):
+        self.assertRaises(ValueError, self.processor.input_lines, '-2,2')
+
     if __name__ == '__main__':
         unittest.main()
