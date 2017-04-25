@@ -30,15 +30,21 @@ class LCD(object):
 
 	def paint_line_X(self, point_1, point_2):
 		for x in xrange(self.current_size):
-			i = point_2+x
+			i = point_2+x+1
 			j = point_1
+			print 'X'
+			print i 
+			print j
 			self.matrix[j][i] = self.HORIZONTAL
 
 	def paint_line_Y(self, point_1, point_2):
 		for x in xrange(self.current_size):
-			i = point_1+x
-			j = point_2
-			self.matrix[i][j] = "|"
+			i = point_1+x+1
+			j = point_2	
+			print 'Y'
+			print i
+			print j
+			self.matrix[i][j] = self.VERTICAL
 
 
 	def add_seg_1(self):
@@ -107,7 +113,7 @@ class LCD(object):
 			"""Ciclo digito de cada numero"""
 			fix_point_x = 0
 			for c in map(int, str(number)):
-				self.fixed_points[11] = fix_point_x
+				self.fixed_points[11] = 0 + fix_point_x
 				self.fixed_points[20] = digit_rows / 2
 				self.fixed_points[21] = 0 + fix_point_x
 				self.fixed_points[30] = digit_rows -1
@@ -125,11 +131,12 @@ class LCD(object):
 				del self.seg_list[:]
 				fix_point_x = fix_point_x + digit_cols + self.between_digits
 			
-			for f in xrange(len(self.matrix)):
-				for c in xrange(len(self.matrix[f])):					
-					print self.matrix[f][c]
-					print f
-					print c
-				print " "
+
+			print ' ',
+			for i in range(len(self.matrix[1])):
+				print i,
+			print
+			for i, element in enumerate(self.matrix):
+				print i, ' '.join(element)
 
 			
