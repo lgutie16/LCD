@@ -11,9 +11,11 @@ class LCD(object):
 	def __init__(self, between_digits, input_lines):
 		self.between_digits = between_digits
 		self.input_lines   = input_lines
-		self.VERTICAL      = "|"
-		self.HORIZONTAL    = "-"
+		self.VERTICAL      = '|'
+		self.HORIZONTAL    = '-'
+		self.matrix		   = [[]]
 		self.seg_list      = []
+		self.current_size  = 0
 		self.fixed_points  = {10: 0, 11: 0, 20: 0, 21: 0, 30: 0, 31: 0, 40: 0, 
 		                      41: 0, 50: 0, 51: 0,} 
 
@@ -21,45 +23,44 @@ class LCD(object):
 		                      4: self.four, 5: self.five, 6: self.six, 7: self.seven,
 		                      8: self.eight, 9: self.nine,}
 
-		self.seg_options  =  {0: self.add_seg_1, 1: self.add_seg_2, 2: self.add_seg_3, 
-		                      3: self.add_seg_4, 4: self.add_seg_5, 5: self.add_seg_6, 
-		                      6: self.add_seg_7,}
+		self.seg_options  =  {1: self.add_seg_1, 2: self.add_seg_2, 3: self.add_seg_3, 
+		                      4: self.add_seg_4, 5: self.add_seg_5, 6: self.add_seg_6, 
+		                      7: self.add_seg_7,}
 
 
-	def paint_digits_X(self, matrix, digit, size, start_point):
-		for x in xrange(size):
-			i = start_point[1]+x
-			j = start_point[0]
-			matrix[j][i] = line_character
+	def paint_line_X(self, point_1, point_2):
+		for x in xrange(self.current_size):
+			i = point_2+x
+			j = point_1
+			self.matrix[j][i] = self.HORIZONTAL
 
-	def paint_digits_Y(self, matrix, digit, size, start_point):
-		for x in xrange(size):
-			i = start_point[0]+x
-			j = start_point[1]
-			matrix[i][j] = line_character
+	def paint_line_Y(self, point_1, point_2):
+		for x in xrange(self.current_size):
+			i = point_1+x
+			j = point_2
+			self.matrix[i][j] = "|"
 
 
 	def add_seg_1(self):
-		print self.seg_list
+		self.paint_line_Y(self.fixed_points[10], self.fixed_points[11])
 
 	def add_seg_2(self):
-		print self.seg_list
+		self.paint_line_Y(self.fixed_points[20], self.fixed_points[21])
 
 	def add_seg_3(self):
-		print self.seg_list
+		self.paint_line_Y(self.fixed_points[50], self.fixed_points[51])
 
 	def add_seg_4(self):
-		print self.seg_list
+		self.paint_line_Y(self.fixed_points[40], self.fixed_points[41])
 
 	def add_seg_5(self):
-		print self.seg_list
+		self.paint_line_X(self.fixed_points[10], self.fixed_points[11])
 
 	def add_seg_6(self):
-		print self.seg_list
+		self.paint_line_X(self.fixed_points[20], self.fixed_points[21])
 
 	def add_seg_7(self):
-		print self.seg_list
-
+		self.paint_line_X(self.fixed_points[30], self.fixed_points[31])
 
 	def zero(self):
 		self.seg_list.append([1,2,3,4,5,7])
@@ -91,18 +92,19 @@ class LCD(object):
 	def nine(self):
 		self.seg_list.append([1,2,34,5,7])
 		
-
-
 	def paint_number(self):
+		"""Ciclo cada linea leida"""
 		for x in xrange(len(self.input_lines)):
-			matrix = []
 			size = self.input_lines[x][0]
 			number = self.input_lines[x][1]			
 			number_len = len(str(number))
 			digit_cols = size+2
 			digit_rows = size*2+3
-			total_rows = number_len*digit_cols+number_len*self.between_digits
+			total_cols = number_len*digit_cols+number_len*self.between_digits
+			self.matrix = [[' ' for i in xrange(total_cols)] for i in xrange(digit_rows)]
+			self.current_size = size
 
+			"""Ciclo digito de cada numero"""
 			fix_point_x = 0
 			for c in map(int, str(number)):
 				self.fixed_points[11] = fix_point_x
@@ -115,8 +117,19 @@ class LCD(object):
 				self.fixed_points[51] = digit_cols -1 +fix_point_x
 				self.options[c]()
 
-				for seg in xrange(len(self.seg_list)):
-					seg_id = self.seg_list[seg]
-					self.seg_options[seg_id]()
+				"""Ciclo para pintar seg de un digito"""
+				for seg in xrange(len(self.seg_list[0])):
+					seg_ref = self.seg_list[0][seg]
+					self.seg_options[seg_ref]()
 
+				del self.seg_list[:]
 				fix_point_x = fix_point_x + digit_cols + self.between_digits
+			
+			for f in xrange(len(self.matrix)):
+				for c in xrange(len(self.matrix[f])):					
+					print self.matrix[f][c]
+					print f
+					print c
+				print " "
+
+			

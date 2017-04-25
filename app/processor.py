@@ -1,5 +1,3 @@
-import pdb
-
 class Processor(object):
 
     def between_digits(self, x):
