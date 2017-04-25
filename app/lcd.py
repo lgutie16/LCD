@@ -99,7 +99,6 @@ class LCD(object):
 		self.seg_list.append([1,2,34,5,7])
 		
 	def paint_number(self):
-		"""Ciclo cada linea leida"""
 		for x in xrange(len(self.input_lines)):
 			size = self.input_lines[x][0]
 			number = self.input_lines[x][1]			
@@ -110,7 +109,6 @@ class LCD(object):
 			self.matrix = [[' ' for i in xrange(total_cols)] for i in xrange(digit_rows)]
 			self.current_size = size
 
-			"""Ciclo digito de cada numero"""
 			fix_point_x = 0
 			for c in map(int, str(number)):
 				self.fixed_points[11] = 0 + fix_point_x
@@ -123,7 +121,6 @@ class LCD(object):
 				self.fixed_points[51] = digit_cols -1 +fix_point_x
 				self.options[c]()
 
-				"""Ciclo para pintar seg de un digito"""
 				for seg in xrange(len(self.seg_list[0])):
 					seg_ref = self.seg_list[0][seg]
 					self.seg_options[seg_ref]()
